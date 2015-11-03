@@ -15,17 +15,19 @@ while current_page != destination:
 	possibilities = []
 	for title in current_page.links():
 		try:
-			print "appending " + str(title) + " to possibilities" 
+			#print "appending " + str(title) + " to possibilities" 
 			possibilities.append(page.Page(title))
-		except Exception:
-			print "caught an error: " + str(Exception)
+		except Exception, msg:
+			print "caught an error: " + str(msg)
 
 	print "computing scores"
 	scores = []
-	for page in possibilities:
-		score = tf_idf.distance(destination.list_of_words(), page.list_of_words())
-		print page.title() + " gets score " + str(score)
-		scores.append(score)
+	for possible_page in possibilities:
+		if possible_page = destination: current_page = possible_page
+		else
+			score = tf_idf.distance(destination.list_of_words(), possible_page.list_of_words())
+			print possible_page.title() + " gets score " + str(score)
+			scores.append(score)
 
 	best_page = possibilities[scores.index(min(scores))]
 	print "clicking on " + best_page.title()

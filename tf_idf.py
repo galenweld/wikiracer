@@ -56,4 +56,4 @@ def distance(dest_words, page_words):
   dist = 0.0
   for word in difference_hist:
     dist += abs(difference_hist[word])
-  print dist
+  return dist
