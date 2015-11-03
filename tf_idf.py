@@ -1,10 +1,11 @@
+# -*- coding: utf-8 -*-
 """
 Simple modified TF-IDF implementation adapted very loosely from:
 Harry R. Schwartz (hrs on github)
 https://github.com/hrs/python-tf-idf
 
 Just kidding – I made this distance metric up since actual TF-IDF
-seemed reallyt hard at 1:26am.
+seemed really hard at 1:26am.
 """
 
 
@@ -33,7 +34,33 @@ def distance(dest_words, page_words):
   The index is normalized based on the frequency of words appearing in
   the dest_words page, therefore the comparison values between all
   pages of the same destination should be on the same scale. I think.
+  Currently, this works by:
+  For every word on the destination page, that word's frequency / #words
+  is computed.
+  That word's frequency is also computed on the page in question.
+  The difference between the two is taken.
+  We then take the sum of the absoulute value for all these differences.
+  This way, a larger distance means the page is less similar.
   """
   dest_hist = histogram(dest_words)
   page_hist = histogram(page_words)
 
+
+  # positive difference means the word appears more on the destination
+  difference_hist = {}
+  for word in dest_hist:
+    difference_hist[word] = dest_hist[word] - page_hist.get(word, 0.0)
+
+  dist = 0.0
+  for word in difference_hist:
+    dist += abs(difference_hist[word])
+  print dist
+
+
+
+#cats = ['I', 'like', 'cats', 'a', 'lot']
+#dogs = ['I', 'like', 'dogs', 'a', 'lot']
+#no_dogs = ['I', 'dont', 'like', 'dogs', 'at', 'all']
+
+#print distance(cats, dogs)
+#print (distance(cats, no_dogs))
