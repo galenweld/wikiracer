@@ -14,7 +14,7 @@ def make_possiblities(current_page):
 	return possibilities
 
 
-def compute_scores(possibilities):
+def compute_scores(destination, possibilities):
 	""" Goes through all possiblites and adds a score field to them. """
 	print "computing scores"
 
@@ -56,11 +56,11 @@ def navigate(origin_title, destination_title):
 			path.append(destination)
 			return path
 
-		compute_scores(possibilities)
+		compute_scores(destination, possibilities)
 
 		current_page = best_guess(possibilities)
 		path.append(current_page)
 		print "clicking on " + current_page.title()
 
 
-print navigate("Daniel S. Weld", "University of Washington")
+print navigate("Daniel S. Weld", "Context Relevant")
