@@ -2,7 +2,7 @@ import operator
 import page
 import tf_idf
 
-origin_title = "Daniel S. Weld"
+origin_title = "University of Washington"
 destination_title = "Seattle"
 
 origin = page.Page(origin_title)
@@ -23,8 +23,8 @@ while current_page != destination:
 	print "computing scores"
 	scores = []
 	for possible_page in possibilities:
-		if possible_page = destination: current_page = possible_page
-		else
+		if possible_page == destination: current_page = possible_page
+		else:
 			score = tf_idf.distance(destination.list_of_words(), possible_page.list_of_words())
 			print possible_page.title() + " gets score " + str(score)
 			scores.append(score)
