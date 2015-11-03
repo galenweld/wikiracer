@@ -41,10 +41,10 @@ def navigate(origin_title, destination_title):
 	# Get set up to start
 	origin = page.Page(origin_title)
 	destination = page.Page(destination_title)
-
 	current_page = origin
-	print "starting at " + current_page.title()
+	path = [origin]
 
+	print "starting at " + current_page.title()
 
 	# Search through pages
 	while current_page != destination:
@@ -53,12 +53,14 @@ def navigate(origin_title, destination_title):
 		# Check if we've found it
 		if destination in possibilities:
 			print "found destination page"
-			return
+			path.append(destination)
+			return path
 
 		compute_scores(possibilities)
 
 		current_page = best_guess(possibilities)
+		path.append(current_page)
 		print "clicking on " + current_page.title()
 
 
-navigate("Daniel S. Weld", "University of Washington")
+print navigate("Daniel S. Weld", "University of Washington")

@@ -13,6 +13,12 @@ class Page(object):
 	def __eq__(self, other):
 		return self.wikipage_obj.__eq__(other.wikipage_obj)
 
+	def __str__(self):
+		return self.wikipage_obj.title
+
+	def __repr__(self):
+		return self.wikipage_obj.__repr__()
+
 	def list_of_words(self):
 		content = self.wikipage_obj.content
 
