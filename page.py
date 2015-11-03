@@ -1,7 +1,7 @@
 import wikipedia
 import tf_idf
 
-class page(object):
+class Page(object):
 	""" A class which extends wikipedia.wikipedia.WikipediaPage.
 	Adds methods that are useful to wikiracer.
 	Currently just wraps the WikipediaPage class instead of actually
