@@ -19,17 +19,19 @@ def navigate(origin_title, destination_title):
 				print "caught an error: " + str(msg)
 
 		print "computing scores"
-		scores = []
 		for possible_page in possibilities:
 			if possible_page == destination: current_page = possible_page
 			else:
-				score = tf_idf.distance(destination.list_of_words(), possible_page.list_of_words())
+				score =	tf_idf.distance(destination.list_of_words(), possible_page.list_of_words())
 				print possible_page.title() + " gets score " + str(score)
-				scores.append(score)
+				possible_page.score = score
 
-		best_page = possibilities[scores.index(min(scores))]
-		print "clicking on " + best_page.title()
-		current_page = best_page
+		best_yet = possibilities[0]
+		for possible_page in possibilities:
+			if possible_page.score < best_yet.score:
+				best_yet = possible_page
+		print "clicking on " + best_yet.title()
+		current_page = best_yet
 
 	print "made it to " + current_page.title()
 

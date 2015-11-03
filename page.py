@@ -8,6 +8,7 @@ class Page(object):
 	extending it since I can't get that to work."""
 	def __init__(self, page_title):
 		self.wikipage_obj = wikipedia.page(page_title)
+		self.score = None
 
 	def __eq__(self, other):
 		return self.wikipage_obj.__eq__(other.wikipage_obj)
