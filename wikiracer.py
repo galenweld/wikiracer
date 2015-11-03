@@ -24,28 +24,41 @@ def compute_scores(possibilities):
 		possible_page.score = score
 
 
+def best_guess(possibilities):
+	""" Given a scored set of possibilities, return the possiblity with the
+	lowest score"""
+	best_yet = possibilities[0]
+	for possible_page in possibilities:
+		if possible_page.score < best_yet.score: best_yet = possible_page
+	return best_yet
+
+
 def navigate(origin_title, destination_title):
 	""" Navigates from origin_title to destination_title, trying to find the
 	shortest path. Returns a list of pages visited.
 	At least, it'll do this eventually"""
+
+	# Get set up to start
 	origin = page.Page(origin_title)
 	destination = page.Page(destination_title)
 
 	current_page = origin
 	print "starting at " + current_page.title()
 
+
+	# Search through pages
 	while current_page != destination:
 		possibilities = make_possiblities(current_page)
 
+		# Check if we've found it
+		if destination in possibilities:
+			print "found destination page"
+			return
+
 		compute_scores(possibilities)
 
-		best_yet = possibilities[0]
-		for possible_page in possibilities:
-			if possible_page.score < best_yet.score:
-				best_yet = possible_page
-		print "clicking on " + best_yet.title()
-		current_page = best_yet
+		current_page = best_guess(possibilities)
+		print "clicking on " + current_page.title()
 
-	print "made it to " + current_page.title()
 
 navigate("Daniel S. Weld", "University of Washington")
