@@ -16,6 +16,8 @@ def histogram(word_list):
   the number of occurances of that word divided by the total
   number of words.
   """
+  assert type(word_list) == list
+
   histogram = {}
   total_words = len(word_list)
   word_frac = 1.0/total_words

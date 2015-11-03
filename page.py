@@ -7,11 +7,21 @@ class Page(object):
 	Currently just wraps the WikipediaPage class instead of actually
 	extending it since I can't get that to work."""
 	def __init__(self, page_title):
-		self.wikipage_obj = wikipedia.page(title)
+		self.wikipage_obj = wikipedia.page(page_title)
 
 	def __eq__(self, other):
-		return self.wikipage_obj = other.wikipage_obj
+		return self.wikipage_obj.__eq__(other.wikipage_obj)
 
 	def list_of_words(self):
-		string = (self.wikipage_obj.content(self)).encode('ascii', 'replace')
-		return str.split(string)
+		content = self.wikipage_obj.content
+
+		string = content.encode('ascii', 'replace')
+
+		ls = str.split(string)
+		return ls
+
+	def title(self):
+		return str(self.wikipage_obj.title.encode('ascii', 'replace'))
+
+	def links(self):
+		return self.wikipage_obj.links
