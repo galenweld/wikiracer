@@ -55,12 +55,3 @@ def distance(dest_words, page_words):
   for word in difference_hist:
     dist += abs(difference_hist[word])
   print dist
-
-
-
-#cats = ['I', 'like', 'cats', 'a', 'lot']
-#dogs = ['I', 'like', 'dogs', 'a', 'lot']
-#no_dogs = ['I', 'dont', 'like', 'dogs', 'at', 'all']
-
-#print distance(cats, dogs)
-#print (distance(cats, no_dogs))
