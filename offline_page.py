@@ -21,7 +21,7 @@
 from bs4 import BeautifulSoup
 import re
 
-point_this_to_your_wikipedia_xml = "/Users/galenweld/Wikipedia/wikipedia.xml"
+point_this_to_your_wikipedia_xml = "/Users/galenweld/Wikipedia/small.xml"
 
 wiki = BeautifulSoup(open(point_this_to_your_wikipedia_xml), 'html.parser')
 
@@ -30,15 +30,15 @@ class Page(object):
 	""" constructs and returns a page object with the given title
 		throws a NameError if there is no matching page """
 	def __init__(self, page_title):
-		tag = wiki.find(title=page_title) # this part may take a while
-		if tag == None: raise NameError("page with title " + page_title + " was not found")
+		doc = wiki.find(title=page_title) # this part may take a while
+		if doc == None: raise NameError("page with title " + page_title + " was not found")
 
-		self.title = str(tag['title'])
-		self.id = int(tag['id'])
-		self.url = str(tag['url'])
-		self.body = tag.get_text()
+		self.title = str(doc['title'])
+		self.id = int(doc['id'])
+		self.url = str(doc['url'])
+		self.body = doc.get_text()
 
-		self.list_of_links = [x.string.encode('ascii', 'replace') for x in tag.find_all('a')]
+		self.list_of_links = [x.string.encode('ascii', 'replace') for x in doc.find_all('a')]
 
 
 
@@ -63,10 +63,5 @@ class Page(object):
 		return self.list_of_links
 		
 
-
-# tag = wiki.find(title="Achilles")
-
-# print [x.string.encode('ascii', 'replace') for x in tag.find_all('a')]
-
-p = Page("University of Washington")
+p = Page("Anarchism")
 print p.links()
