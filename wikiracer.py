@@ -2,12 +2,16 @@ import operator
 import page
 import tf_idf
 
+debug = True
+
 def make_possiblities(current_page):
 	""" Builds a list of pages linked to by current_page """
+	print "fetching linked pages"
 	possibilities = []
+
 	for title in current_page.links():
 		try:
-			print "fetching " + str(title) 
+			if debug: print "fetching " + str(title) 
 			possibilities.append(page.Page(title))
 		except Exception, msg:
 			print "caught an error: " + str(msg)
@@ -20,7 +24,7 @@ def compute_scores(destination, possibilities):
 
 	for possible_page in possibilities:
 		score =	tf_idf.distance(destination.list_of_words(), possible_page.list_of_words())
-		print possible_page.title() + " gets score " + str(score)
+		if debug: print possible_page.title() + " gets score " + str(score)
 		possible_page.score = score
 
 
@@ -56,6 +60,7 @@ def navigate(origin_title, destination_title):
 			path.append(destination)
 			return path
 
+		print "not at destination yet"
 		compute_scores(destination, possibilities)
 
 		current_page = best_guess(possibilities)
@@ -63,4 +68,4 @@ def navigate(origin_title, destination_title):
 		print "clicking on " + current_page.title()
 
 
-print navigate("Daniel S. Weld", "Context Relevant")
+print navigate("Arthur H. Rosenfeld", "Star Trek")
