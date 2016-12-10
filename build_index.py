@@ -7,7 +7,7 @@ import csv
 
 base_dir = '/Users/galenweld/Wikipedia'
 
-output_file_path = '/Users/galenweld/Wikipedia/new_index.csv'
+output_file_path = '/Users/galenweld/Wikipedia/index.csv'
 
 #####################################################
 

@@ -24,7 +24,7 @@ import time
 import csv
 import re
 
-wikipedia_index_file = "/Users/galenweld/Wikipedia/new_index.csv"
+wikipedia_index_file = "/Users/galenweld/Wikipedia/index.csv"
 wikipedia_base_directory = "/Users/galenweld/Wikipedia"
               # make sure there's no final slash here ^
 
