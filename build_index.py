@@ -18,8 +18,10 @@ output_file_path = '/Volumes/Vesper/wiki_extracted/new_index.csv'
 	path to the file (relative to the base_dir) containing its text.
 
 	If this causes trouble, try deleting anything at output_file_path, and
-	if your terminal yells at you, create a black file there with
+	if your terminal yells at you, create a blank file there with
 	touch output_file_path
+
+	This code took about 1.5 hours to run on my 2014 Macbook Pro.
 
 	authored by Galen Weld, December 2016 """
 

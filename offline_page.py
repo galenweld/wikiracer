@@ -43,7 +43,7 @@ def load_index():
 		csvreader = csv.reader(index_file, delimiter=',')
 
 		for line in csvreader:
-			index[line[0].lower()] = os.join(wikipedia_base_directory, line[1])
+			index[line[0].lower()] = join(wikipedia_base_directory, line[1])
 			num_entries += 1
 
 	print "Loaded " + str(num_entries) + " index entries in " + \
