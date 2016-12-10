@@ -13,25 +13,59 @@
 	The resulting files are then easily concatenated into a single
 	large XML wile with cat */*wiki_* > wikipedia.xml
 
+	NEED TO ADD DETAILS HERE
+
 	This wikipedia.xml file should be formatted as defined here:
 	http://medialab.di.unipi.it/wiki/Document_Format
 
 	authored by Galen Weld, December 2016 """
 
 from bs4 import BeautifulSoup
+from os.path import join
+import time
+import csv
 import re
 
-point_this_to_your_wikipedia_xml = "/Users/galenweld/Wikipedia/small.xml"
+wikipedia_base_directory = "/Volumes/Vesper/wiki_extracted/"
+wikipedia_index_file = "/Volumes/Vesper/wiki_extracted/index.csv"
 
-wiki = BeautifulSoup(open(point_this_to_your_wikipedia_xml), 'html.parser')
 
+############################## BUILD THE INDEX ##############################
+
+def load_index():
+	""" loads the wikipedia article index from wikipedia_index_file and
+		returns it as a python dictionary """
+	print "Offline Wikipedia: Loading Index\nThis may take a bit..."
+	index = {}
+	num_entries = 0
+	start_time = time.time()
+
+	with open(wikipedia_index_file) as index_file:
+		csvreader = csv.reader(index_file, delimiter=',')
+
+		for line in csvreader:
+			index[line[0].lower()] = line[1] # using lowercase here so that we're case-agnostic
+			num_entries += 1
+
+	print "Loaded " + str(num_entries) + " index entries in " + \
+			str(time.time() - start_time) + " seconds."
+	return index
+
+index = load_index()
+
+#############################################################################
 
 class Page(object):
 	""" constructs and returns a page object with the given title
 		throws a NameError if there is no matching page """
 	def __init__(self, page_title):
-		doc = wiki.find(title=page_title) # this part may take a while
-		if doc == None: raise NameError("page with title " + page_title + " was not found")
+		file_path = index.get(page_title.lower())
+		if file_path == None: raise NameError("page with title " + page_title + " was not found")
+
+		data = BeautifulSoup(open(file_path), 'html.parser')
+		doc = data.find(title=page_title)
+		if doc == None: raise KeyError("error in index was detected when loading " + page_title)
+			# note: if we're seeing a lot of these errors, it's probably a case snesitivity thing
 
 		self.title = str(doc['title'])
 		self.id = int(doc['id'])
@@ -39,8 +73,6 @@ class Page(object):
 		self.body = doc.get_text()
 
 		self.list_of_links = [x.string.encode('ascii', 'replace') for x in doc.find_all('a')]
-
-
 
 	def __eq__(self, other):
 		return self.id == other.id
@@ -63,5 +95,5 @@ class Page(object):
 		return self.list_of_links
 		
 
-p = Page("Anarchism")
-print p.links()
+# p = Page("Anarchism")
+# print p.links()
