@@ -10,24 +10,23 @@
 	Pro	to convert ~4.5 million articles from a 2014 dump of only the
 	current revisions of the English language Wikipedia.
 
-	The resulting files are then easily concatenated into a single
-	large XML wile with cat */*wiki_* > wikipedia.xml
+	Once the Wikipedia_Extractor has built a directory structure, an
+	index needs to be built. For help with this, see the included build_index
+	module.
 
-	NEED TO ADD DETAILS HERE
-
-	This wikipedia.xml file should be formatted as defined here:
-	http://medialab.di.unipi.it/wiki/Document_Format
+	Once this prep work has been done, update the file paths below.
 
 	authored by Galen Weld, December 2016 """
 
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup 
 from os.path import join
 import time
 import csv
 import re
 
-wikipedia_base_directory = "/Volumes/Vesper/wiki_extracted/"
 wikipedia_index_file = "/Volumes/Vesper/wiki_extracted/index.csv"
+wikipedia_base_directory = "/Volumes/Vesper/wiki_extracted"
+                 # make sure there's no final slash here ^
 
 
 ############################## BUILD THE INDEX ##############################
@@ -44,7 +43,7 @@ def load_index():
 		csvreader = csv.reader(index_file, delimiter=',')
 
 		for line in csvreader:
-			index[line[0].lower()] = line[1] # using lowercase here so that we're case-agnostic
+			index[line[0].lower()] = os.join(wikipedia_base_directory, line[1])
 			num_entries += 1
 
 	print "Loaded " + str(num_entries) + " index entries in " + \
@@ -63,7 +62,7 @@ class Page(object):
 		if file_path == None: raise NameError("page with title " + page_title + " was not found")
 
 		data = BeautifulSoup(open(file_path), 'html.parser')
-		doc = data.find(title=page_title)
+		doc = data.find(title=re.compile(page_title, re.IGNORECASE))
 		if doc == None: raise KeyError("error in index was detected when loading " + page_title)
 			# note: if we're seeing a lot of these errors, it's probably a case snesitivity thing
 
