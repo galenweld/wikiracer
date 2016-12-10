@@ -24,9 +24,9 @@ import time
 import csv
 import re
 
-wikipedia_index_file = "/Volumes/Vesper/wiki_extracted/index.csv"
-wikipedia_base_directory = "/Volumes/Vesper/wiki_extracted"
-                 # make sure there's no final slash here ^
+wikipedia_index_file = "/Users/galenweld/Wikipedia/new_index.csv"
+wikipedia_base_directory = "/Users/galenweld/Wikipedia"
+              # make sure there's no final slash here ^
 
 
 ############################## BUILD THE INDEX ##############################

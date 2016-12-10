@@ -5,9 +5,9 @@ import csv
 
 #####################################################
 
-base_dir = '/Volumes/Vesper/wiki_extracted'
+base_dir = '/Users/galenweld/Wikipedia'
 
-output_file_path = '/Volumes/Vesper/wiki_extracted/new_index.csv'
+output_file_path = '/Users/galenweld/Wikipedia/new_index.csv'
 
 #####################################################
 
@@ -31,7 +31,7 @@ writer = csv.writer(output_file, delimiter=',')
 for root, dirs, files in os.walk(base_dir):
 	for filename in files:
 		path = join(root, filename)
-		relative_path = path[len(base_dir):]
+		relative_path = path[len(base_dir)+1:]
 
 		if filename[0] != '.':
 			file_obj = open(path)
