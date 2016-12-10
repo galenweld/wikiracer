@@ -20,6 +20,7 @@
 
 from bs4 import BeautifulSoup 
 from os.path import join
+import urllib
 import time
 import csv
 import re
@@ -71,7 +72,7 @@ class Page(object):
 		self.url = str(doc['url'])
 		self.body = doc.get_text()
 
-		self.list_of_links = [x.string.encode('ascii', 'replace') for x in doc.find_all('a')]
+		self.list_of_links = [urllib.unquote(x['href'].encode('ascii', 'replace')) for x in doc.find_all('a')]
 
 	def __eq__(self, other):
 		return self.id == other.id
@@ -94,5 +95,5 @@ class Page(object):
 		return self.list_of_links
 		
 
-# p = Page("Anarchism")
-# print p.links()
+p = Page("Seattle")
+print p.links()
