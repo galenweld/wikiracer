@@ -127,20 +127,25 @@ class SampleStats(object):
 		return len(index)
 
 	def __str__(self):
-		""" enables pretty printing of stats """
+		""" enables pretty printing of stats
+			usage: import the class, then:
+					print SampleStats([num_samples]) """
 		print "generating graph stats...\n"
 		start_time = time.time()
 		bf = self.branching_factor()
+		req_time = float(time.time() - start_time)
 		b = str(bf[0])
 		n = str(bf[1])
 		err = str(100.0 * float(self.default_num_samples-bf[1])/self.default_num_samples)
 		size = str(self.num_articles())
+		pg_time = str(req_time/bf[1])
 		t = str(time.time() - start_time)
-		return  "____Wikipedia Graph Stats____\n" + \
+		return  "_______Wikipedia Graph Stats_______\n" + \
 				"# of nodes:\t\t"+size+"\n" + \
 				"Avg. branching factor\t"+b+"\n" + \
 				"\t\t\t(n="+n+")\n" + \
 				"Page Req. Fail Rate:\t"+err+"%\n" + \
+				"Avg. Page Req. Time:\t"+pg_time+" sec\n" + \
 				"<stats generated in "+t+ " sec>"
 
 	def __repr__(self):
