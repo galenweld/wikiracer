@@ -19,6 +19,7 @@
 	authored by Galen Weld, December 2016 """
 
 from bs4 import BeautifulSoup 
+from random import choice
 from os.path import join
 import urllib
 import time
@@ -29,6 +30,7 @@ wikipedia_index_file = "/Users/galenweld/Wikipedia/index.csv"
 wikipedia_base_directory = "/Users/galenweld/Wikipedia"
               # make sure there's no final slash here ^
 
+debug = False
 
 ############################## BUILD THE INDEX ##############################
 
@@ -81,7 +83,7 @@ class Page(object):
 		return self.page_title
 
 	def __repr__(self):
-		return "Page_id:" + str(self.id) + '_' + self.page_title
+		return "<WikiPage:Page_id" + str(self.id) + '_title:' + self.page_title + ">"
 
 	def list_of_words(self):
 		""" returns a list of strings contained within the text of the page
@@ -97,6 +99,48 @@ class Page(object):
 	def title(self):
 		""" simple function for backwards compatibility """
 		return self.page_title
+
+
+class SampleStats(object):
+	""" Simple class to generate statistics about the Wikipedia graph """
+	def __init__(self, num_samples=100):
+		self.default_num_samples = num_samples
+
+	def branching_factor(self, num_samples=0):
+		if num_samples == 0: num_samples = self.default_num_samples
+		succesful_samples = 0
+		branches = 0
+		for i in range(num_samples):
+			title = choice(index.keys()) # get random article title
+			try:
+				art = Page(title)
+				branches += len(art.links())
+				succesful_samples += 1
+			except Exception, msg:
+				if debug:print "bad article: " + str(msg)
+		return float(branches)/succesful_samples
+
+	def num_articles(self):
+		return len(index)
+
+	def __str__(self):
+		""" enables pretty printing of stats """
+		print "generating graph stats...\n"
+		start_time = time.time()
+		b = str(self.branching_factor())
+		n = str(self.num_articles())
+		t = str(time.time() - start_time)
+		return  "____Wikipedia Graph Stats____\n" + \
+				"# of nodes:\t\t"+n+"\n" + \
+				"Avg. branching factor\t"+b+"\n" + \
+				"\t\t\t(n="+str(self.default_num_samples)+")\n" + \
+				"<stats generated in "+t+ " sec>"
+
+	def __repr__(self):
+		return "<wiki_stats_sampling_object>"
+
+
+
 		
 
 
