@@ -28,12 +28,14 @@ def compute_scores(destination, possibilities):
 		possible_page.score = score
 
 
-def best_guess(possibilities):
+def best_guess(possibilities, path_so_far):
 	""" Given a scored set of possibilities, return the possiblity with the
-		lowest score"""
+		lowest score
+		by looking at path_so_far, ignores pages we've already visited"""
 	best_yet = possibilities[0]
 	for possible_page in possibilities:
-		if possible_page.score < best_yet.score: best_yet = possible_page
+		if (possible_page.score < best_yet.score) and not possible_page in path_so_far:
+			best_yet = possible_page
 	return best_yet
 
 
@@ -63,7 +65,7 @@ def navigate(origin_title, destination_title):
 		print "not at destination yet"
 		compute_scores(destination, possibilities)
 
-		current_page = best_guess(possibilities)
+		current_page = best_guess(possibilities, path)
 		path.append(current_page)
 		print "clicking on " + current_page.title()
 
