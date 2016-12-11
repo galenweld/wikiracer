@@ -15,7 +15,7 @@ def make_possiblities(current_page):
 			if debug: print "fetching " + str(title) 
 			possibilities.append(Page(title))
 		except Exception, msg:
-			print "caught an error: " + str(msg)
+			if debug: print "caught an error: " + str(msg)
 	return possibilities
 
 
