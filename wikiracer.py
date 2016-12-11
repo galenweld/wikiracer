@@ -1,5 +1,6 @@
 import operator
 from offline_page import Page
+from path import Path
 import tf_idf
 
 debug = False
@@ -41,7 +42,7 @@ def best_guess(possibilities, path_so_far):
 
 def navigate(origin_title, destination_title):
 	""" Navigates from origin_title to destination_title, trying to find the
-		shortest path. Returns a list of pages visited.
+		shortest path. Returns a Path from the start to end.
 		At least, it'll do this eventually"""
 
 	# Get set up to start
@@ -60,7 +61,7 @@ def navigate(origin_title, destination_title):
 		if destination in possibilities:
 			print "found destination page"
 			path.append(destination)
-			return path
+			return Path(path)
 
 		print "not at destination yet"
 		compute_scores(destination, possibilities)
