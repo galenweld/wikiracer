@@ -1,8 +1,8 @@
 import operator
-import page
+from offline_page import Page
 import tf_idf
 
-debug = True
+debug = False
 
 def make_possiblities(current_page):
 	""" Builds a list of pages linked to by current_page """
@@ -12,7 +12,7 @@ def make_possiblities(current_page):
 	for title in current_page.links():
 		try:
 			if debug: print "fetching " + str(title) 
-			possibilities.append(page.Page(title))
+			possibilities.append(Page(title))
 		except Exception, msg:
 			print "caught an error: " + str(msg)
 	return possibilities
@@ -30,7 +30,7 @@ def compute_scores(destination, possibilities):
 
 def best_guess(possibilities):
 	""" Given a scored set of possibilities, return the possiblity with the
-	lowest score"""
+		lowest score"""
 	best_yet = possibilities[0]
 	for possible_page in possibilities:
 		if possible_page.score < best_yet.score: best_yet = possible_page
@@ -39,12 +39,12 @@ def best_guess(possibilities):
 
 def navigate(origin_title, destination_title):
 	""" Navigates from origin_title to destination_title, trying to find the
-	shortest path. Returns a list of pages visited.
-	At least, it'll do this eventually"""
+		shortest path. Returns a list of pages visited.
+		At least, it'll do this eventually"""
 
 	# Get set up to start
-	origin = page.Page(origin_title)
-	destination = page.Page(destination_title)
+	origin = Page(origin_title)
+	destination = Page(destination_title)
 	current_page = origin
 	path = [origin]
 

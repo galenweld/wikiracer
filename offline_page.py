@@ -67,7 +67,7 @@ class Page(object):
 		if doc == None: raise KeyError("error in index was detected when loading " + page_title)
 			# note: if we're seeing a lot of these errors, it's probably a case snesitivity thing
 
-		self.title = str(doc['title'])
+		self.page_title = str(doc['title'])
 		self.id = int(doc['id'])
 		self.url = str(doc['url'])
 		self.body = doc.get_text()
@@ -78,10 +78,10 @@ class Page(object):
 		return self.id == other.id
 
 	def __str__(self):
-		return self.title
+		return self.page_title
 
 	def __repr__(self):
-		return "Page_id:" + str(self.id) + '_' + self.title
+		return "Page_id:" + str(self.id) + '_' + self.page_title
 
 	def list_of_words(self):
 		""" returns a list of strings contained within the text of the page
@@ -93,7 +93,10 @@ class Page(object):
 		""" returns a list of strings, where each string is the title of a 
 		wikipedia page linked to in this page """
 		return self.list_of_links
+
+	def title(self):
+		""" simple function for backwards compatibility """
+		return self.page_title
 		
 
-p = Page("Seattle")
-print p.links()
+
