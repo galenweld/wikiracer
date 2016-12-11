@@ -107,6 +107,8 @@ class SampleStats(object):
 		self.default_num_samples = num_samples
 
 	def branching_factor(self, num_samples=0):
+		""" returns a tuple with the avg branching factor and the number
+			of succesful_samples """
 		if num_samples == 0: num_samples = self.default_num_samples
 		succesful_samples = 0
 		branches = 0
@@ -118,22 +120,27 @@ class SampleStats(object):
 				succesful_samples += 1
 			except Exception, msg:
 				if debug:print "bad article: " + str(msg)
-		return float(branches)/succesful_samples
+		return (float(branches)/succesful_samples, succesful_samples)
 
 	def num_articles(self):
+		""" returns number of articles indexed """
 		return len(index)
 
 	def __str__(self):
 		""" enables pretty printing of stats """
 		print "generating graph stats...\n"
 		start_time = time.time()
-		b = str(self.branching_factor())
-		n = str(self.num_articles())
+		bf = self.branching_factor()
+		b = str(bf[0])
+		n = str(bf[1])
+		err = str(100.0 * float(self.default_num_samples-bf[1])/self.default_num_samples)
+		size = str(self.num_articles())
 		t = str(time.time() - start_time)
 		return  "____Wikipedia Graph Stats____\n" + \
-				"# of nodes:\t\t"+n+"\n" + \
+				"# of nodes:\t\t"+size+"\n" + \
 				"Avg. branching factor\t"+b+"\n" + \
-				"\t\t\t(n="+str(self.default_num_samples)+")\n" + \
+				"\t\t\t(n="+n+")\n" + \
+				"Page Req. Fail Rate:\t"+err+"%\n" + \
 				"<stats generated in "+t+ " sec>"
 
 	def __repr__(self):
