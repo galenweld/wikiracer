@@ -1,4 +1,5 @@
-from offline_page import Page
+#from offline_page import Page
+from page import Page
 
 class Path(object):
 	""" a simple class to compute stats on a path
