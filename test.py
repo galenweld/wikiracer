@@ -23,4 +23,6 @@ for i in range(len(pairs)):
 	print "Origin-Destination Pair "+str(i)+":"
 	print "Origin:\t" + str(paths[i].origin())
 	print "Destination:\t" + str(paths[i].destination())
+	print "Path:\t" + str(path)
+	print "Path Length\t" + str(len(path))
 	print "(generated in "+str(times[i])+ "sec)"
