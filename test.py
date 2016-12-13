@@ -30,4 +30,4 @@ def compute_test_results(list_of_pairs):
 		print "Destination:\t" + str(paths[i].destination())
 		print "Path:\t" + str(paths[i])
 		print "Path Length\t" + str(len(paths[i]))
-		print "(generated in "+str(times[i])+ "sec)"
+		print "(generated in "+str(times[i])+ "sec)\n"
