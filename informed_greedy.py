@@ -72,3 +72,4 @@ def navigate(origin_title, destination_title):
 		current_page = best_guess(possibilities, path)
 		path.append(current_page)
 		print "clicking on " + current_page.title()
+
