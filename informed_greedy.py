@@ -1,5 +1,5 @@
 """ Informed Greedy Search through the Wikipedia graph using
-	a TF-IDF distance metric between pages as the heuristic """
+	a TF-IDF distance metric between pages as the heuristic. """
 
 import operator
 from offline_page import Page

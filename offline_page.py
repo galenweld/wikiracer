@@ -53,6 +53,7 @@ def load_index():
 			str(time.time() - start_time) + " seconds."
 	return index
 
+
 index = load_index()
 
 #############################################################################
@@ -76,14 +77,18 @@ class Page(object):
 
 		self.list_of_links = [urllib.unquote(x['href'].encode('ascii', 'replace')) for x in doc.find_all('a')]
 
+
 	def __eq__(self, other):
 		return self.id == other.id
+
 
 	def __str__(self):
 		return self.page_title
 
+
 	def __repr__(self):
 		return "<WikiPage:Page_id" + str(self.id) + '_title:' + self.page_title + ">"
+
 
 	def list_of_words(self):
 		""" returns a list of strings contained within the text of the page
@@ -91,10 +96,12 @@ class Page(object):
 			removed"""
 		return str.split(re.sub(r'\W+', ' ', self.body.encode('ascii', 'replace')))
 
+
 	def links(self):
 		""" returns a list of strings, where each string is the title of a 
 		wikipedia page linked to in this page """
 		return self.list_of_links
+
 
 	def title(self):
 		""" simple function for backwards compatibility """
@@ -105,6 +112,7 @@ class SampleStats(object):
 	""" Simple class to generate statistics about the Wikipedia graph """
 	def __init__(self, num_samples=100):
 		self.default_num_samples = num_samples
+
 
 	def branching_factor(self, num_samples=0):
 		""" returns a tuple with the avg branching factor and the number
@@ -122,9 +130,11 @@ class SampleStats(object):
 				if debug:print "bad article: " + str(msg)
 		return (float(branches)/succesful_samples, succesful_samples)
 
+
 	def num_articles(self):
 		""" returns number of articles indexed """
 		return len(index)
+
 
 	def __str__(self):
 		""" enables pretty printing of stats
@@ -147,6 +157,7 @@ class SampleStats(object):
 				"Page Req. Fail Rate:\t"+err+"%\n" + \
 				"Avg. Page Req. Time:\t"+pg_time+" sec\n" + \
 				"<stats generated in "+t+ " sec>"
+
 
 	def __repr__(self):
 		return "<wiki_stats_sampling_object>"
