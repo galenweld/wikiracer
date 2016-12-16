@@ -63,19 +63,21 @@ class Page(object):
 		throws a NameError if there is no matching page """
 	def __init__(self, page_title):
 		file_path = index.get(page_title.lower())
-		if file_path == None: raise NameError("page with title " + page_title + " was not found")
+		if file_path == None:
+			raise NameError("page with title " + page_title + " was not found")
 
 		data = BeautifulSoup(open(file_path), 'html.parser')
 		doc = data.find(title=re.compile(page_title, re.IGNORECASE))
-		if doc == None: raise KeyError("error in index was detected when loading " + page_title)
-			# note: if we're seeing a lot of these errors, it's probably a case snesitivity thing
+		if doc == None:
+			raise KeyError("error in index was detected when loading " + page_title)
 
 		self.page_title = str(doc['title'])
 		self.id = int(doc['id'])
 		self.url = str(doc['url'])
 		self.body = doc.get_text()
 
-		self.list_of_links = [urllib.unquote(x['href'].encode('ascii', 'replace')) for x in doc.find_all('a')]
+		self.list_of_links = \
+			[urllib.unquote(x['href'].encode('ascii', 'replace')) for x in doc.find_all('a')]
 
 
 	def __eq__(self, other):
