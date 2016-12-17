@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Simple modified TF-IDF implementation adapted very loosely from:
 Harry R. Schwartz (hrs on github)
